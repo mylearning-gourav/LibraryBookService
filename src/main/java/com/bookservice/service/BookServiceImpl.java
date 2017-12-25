@@ -1,33 +1,32 @@
 package com.bookservice.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.bookservice.bean.ResultBean;
+import com.bookservice.dao.BookDao;
 import com.bookservice.entity.Book;
 
-@Service("userService")
+@Service("bookService")
 public class BookServiceImpl implements BookService {
+	
+	private BookDao bookDao;
 
 	public List<Object> getAllBooks() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return bookDao.getAllBooks();
 	}
 
 	public void updateBook(Book book) throws Exception {
-		// TODO Auto-generated method stub
-		
+		bookDao.updateBook(book);
 	}
 
 	public int getbookcount(String bookName) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return bookDao.getbookcount(bookName);
 	}
 
-	public void retirebook(String bookName, String retireDate) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void retirebook(String bookName, Date retireDate) throws Exception {
+		bookDao.retirebook(bookName, retireDate);
 	}
 
 }

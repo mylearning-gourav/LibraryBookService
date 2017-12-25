@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="book")
@@ -19,10 +21,13 @@ public class Book {
 	private int userId;
 	private String name;
 	private String author;
+	@Temporal(TemporalType.DATE)
 	@Column(name="publish_date")
 	private Date publishDate;
+	@Temporal(TemporalType.DATE)
 	@Column(name="purchase_date")
 	private Date purchaseDate;
+	@Temporal(TemporalType.DATE)
 	@Column(name="retired_date")
 	private Date retiredDate;
 	private Float price;

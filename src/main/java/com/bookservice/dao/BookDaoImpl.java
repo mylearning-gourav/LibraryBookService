@@ -1,32 +1,46 @@
 package com.bookservice.dao;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bookservice.entity.Book;
 
+@Transactional
 @Repository("bookDao")
 public class BookDaoImpl implements BookDao {
+	
+	@PersistenceContext
+	private EntityManager entityManager;
 
 	public List<Object> getAllBooks() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		String getBooksHsql = "SELECT id, name, author, publishDate, purchaseDate, retiredDate, price FROM Book";
+		return (ArrayList<Object>) entityManager.createQuery(getBooksHsql).getResultList();
 	}
 
 	public void updateBook(Book book) throws Exception {
-		// TODO Auto-generated method stub
-
+		entityManager.merge(book);
 	}
 
 	public int getbookcount(String bookName) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		Query query = entityManager.createQuery("SELECT COUNT(*) count FROM Book WHERE name = ?");
+		query.setParameter(1, bookName);
+		int count = (Integer) query.getSingleResult();
+		return count;
 	}
 
-	public void retirebook(String bookName, String retireDate) throws Exception {
-		// TODO Auto-generated method stub
-
+	public void retirebook(String bookName, Date retireDate) throws Exception {
+		Book book = new Book();
+		book.setName(bookName);
+		book.setRetiredDate(retireDate);
+		entityManager.merge(book);
 	}
 
 }
